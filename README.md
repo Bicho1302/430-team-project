@@ -2,13 +2,13 @@
 Victor Salazar
 Mar Thayne Lowell
 # Project Name
-
+Handcrafted Heaven
 ## Description
 This project is a web application developed as part of the W02 Group Project. The goal is to build a functional app while practicing teamwork and modern development workflows.
 
 ## Team Members
 - Victor Salazar
-- [Add teammates]
+- Mar Thayne Lowell
 
 ## Technologies
 - HTML
