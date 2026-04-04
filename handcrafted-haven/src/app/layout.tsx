@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/context/CartContext";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Handcrafted Haven",
@@ -8,12 +10,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          <Header />
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }

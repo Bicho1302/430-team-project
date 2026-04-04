@@ -12,7 +12,7 @@ export const products: Product[] = [
     id: 1,
     name: "Handcrafted Clay Vase",
     price: 35,
-    image: "https://images.unsplash.com/photo-1612196808214-b7e239e5d5f6?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1642582615780-35343a19fd65?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Ceramics",
     description:
       "A handmade clay vase designed to bring warmth and character to any room."

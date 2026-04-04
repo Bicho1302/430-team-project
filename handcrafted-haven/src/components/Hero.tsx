@@ -12,7 +12,7 @@ export default function Hero() {
             with purpose.
           </p>
           <div className={styles.actions}>
-            <a className={styles.primaryButton} href="/products">
+            <a className={styles.primaryButton} href="/shop">
               Shop Now
             </a>
             <a className={styles.secondaryButton} href="/sellers">

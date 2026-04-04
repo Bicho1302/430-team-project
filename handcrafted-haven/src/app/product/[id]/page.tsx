@@ -1,17 +1,19 @@
 import { products } from "@/data/products";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import AddToCartButton from "@/components/AddToCartButton";
 
 type ProductDetailPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function ProductDetailPage({
-  params
+export default async function ProductDetailPage({
+  params,
 }: ProductDetailPageProps) {
-  const productId = Number(params.id);
+  const { id } = await params;
+  const productId = Number(id);
   const product = products.find((item) => item.id === productId);
 
   if (!product) {
@@ -37,7 +39,14 @@ export default function ProductDetailPage({
           <p className="product-price large-price">${product.price}</p>
           <p className="product-description">{product.description}</p>
 
-          <button className="shop-button">Add to Cart</button>
+          <AddToCartButton
+            product={{
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image,
+            }}
+          />
         </div>
       </div>
     </section>

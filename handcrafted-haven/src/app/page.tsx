@@ -1,5 +1,4 @@
 import styles from "@/styles/landing.module.css";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import FeaturedCategories from "@/components/FeaturedCategories";
 import Footer from "@/components/Footer";
@@ -7,7 +6,7 @@ import Footer from "@/components/Footer";
 export default function HomePage() {
   return (
     <>
-      <Header />
+      
       <main>
         <Hero />
         <section className={styles.intro}>
