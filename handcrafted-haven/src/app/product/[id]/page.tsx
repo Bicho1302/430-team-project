@@ -1,7 +1,9 @@
 import { products } from "@/data/products";
+import { sellers } from "@/data/sellers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToCartButton from "@/components/AddToCartButton";
+import Reviews from "@/components/Reviews";
 
 type ProductDetailPageProps = {
   params: Promise<{
@@ -19,6 +21,8 @@ export default async function ProductDetailPage({
   if (!product) {
     notFound();
   }
+
+  const seller = sellers.find((item) => item.id === product.sellerId);
 
   return (
     <section className="container page-section">
@@ -39,6 +43,23 @@ export default async function ProductDetailPage({
           <p className="product-price large-price">${product.price}</p>
           <p className="product-description">{product.description}</p>
 
+        {seller && (
+  <div className="feature-card seller-box">
+    <p style={{ fontWeight: 600 }}>Sold by</p>
+    <p>{seller.name}</p>
+    <p className="seller-meta">
+      {seller.specialty} · {seller.location}
+    </p>
+    <Link
+      href={`/seller/${seller.id}`}
+      className="feature-button secondary"
+    >
+      View Seller Profile
+    </Link>
+  </div>
+)}
+         
+
           <AddToCartButton
             product={{
               id: product.id,
@@ -49,6 +70,8 @@ export default async function ProductDetailPage({
           />
         </div>
       </div>
+
+      <Reviews productId={id} />
     </section>
   );
 }

@@ -67,9 +67,9 @@ export default function CartPage() {
             <h2>Order Summary</h2>
             <p>Total: ${cartTotal.toFixed(2)}</p>
 
-            <button className="shop-button checkout-button">
-              Checkout
-            </button>
+           <Link href="/checkout" className="shop-button checkout-button">
+  Checkout
+</Link>
 
             <button className="clear-cart-button" onClick={clearCart}>
               Clear Cart
