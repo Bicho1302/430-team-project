@@ -74,7 +74,13 @@ export default async function SellerProfilePage({
             <strong>Location:</strong> {seller.location}
           </p>
 
-          <p style={{ lineHeight: 1.7 }}>{seller.bio}</p>
+          <p style={{ lineHeight: 1.7, marginBottom: "1rem" }}>
+            {seller.bio}
+          </p>
+
+          <Link href="/seller/add-product" className="feature-button">
+            Add New Product
+          </Link>
         </div>
       </div>
 
