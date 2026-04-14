@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
 export type CartItem = {
   id: number;
@@ -23,12 +29,14 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const CART_STORAGE_KEY = "handcrafted-haven-cart";
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
     try {
-      const savedCart = localStorage.getItem("cart");
+      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
 
       if (savedCart) {
         const parsedCart = JSON.parse(savedCart);
@@ -36,18 +44,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (Array.isArray(parsedCart)) {
           setCart(parsedCart);
         } else {
-          localStorage.removeItem("cart");
+          localStorage.removeItem(CART_STORAGE_KEY);
         }
       }
     } catch (error) {
       console.error("Failed to load cart from localStorage:", error);
-      localStorage.removeItem("cart");
+      localStorage.removeItem(CART_STORAGE_KEY);
     }
   }, []);
 
   useEffect(() => {
     try {
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
     } catch (error) {
       console.error("Failed to save cart to localStorage:", error);
     }

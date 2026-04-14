@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type Review = {
   id: number;
@@ -61,7 +61,6 @@ function StarRating({
           className={`star-button ${star <= rating ? "filled" : ""} ${
             interactive ? "interactive" : ""
           }`}
-          aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
         >
           ★
         </button>
@@ -72,19 +71,49 @@ function StarRating({
 
 export default function Reviews({ productId }: ReviewsProps) {
   const idKey = String(productId);
+  const STORAGE_KEY = `reviews-${idKey}`;
 
-  const [reviews, setReviews] = useState<Review[]>(
-    initialReviewsData[idKey] || []
-  );
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // 🔥 LOAD from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+
+      if (saved) {
+        const parsed = JSON.parse(saved);
+
+        if (Array.isArray(parsed)) {
+          setReviews(parsed);
+          return;
+        }
+      }
+
+      // fallback to initial data
+      setReviews(initialReviewsData[idKey] || []);
+    } catch (error) {
+      console.error("Error loading reviews:", error);
+      setReviews(initialReviewsData[idKey] || []);
+    }
+  }, [idKey]);
+
+  // 🔥 SAVE to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    } catch (error) {
+      console.error("Error saving reviews:", error);
+    }
+  }, [reviews, STORAGE_KEY]);
+
   const averageRating = useMemo(() => {
     if (reviews.length === 0) return 0;
-    const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const total = reviews.reduce((sum, r) => sum + r.rating, 0);
     return total / reviews.length;
   }, [reviews]);
 
@@ -106,6 +135,7 @@ export default function Reviews({ productId }: ReviewsProps) {
     };
 
     setReviews((prev) => [newReview, ...prev]);
+
     setName("");
     setRating(0);
     setComment("");
@@ -125,7 +155,9 @@ export default function Reviews({ productId }: ReviewsProps) {
             <strong>No ratings yet</strong>
           )}
         </p>
+
         <StarRating rating={Math.round(averageRating)} />
+
         <p style={{ marginTop: "0.5rem" }}>
           {reviews.length} review{reviews.length !== 1 ? "s" : ""}
         </p>
